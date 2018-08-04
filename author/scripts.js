@@ -6,3 +6,4 @@ console.clear();var config={apiKey:"AIzaSyC0q4W7LycPoJJQ7d6iluAyDxg5iNS3Jx4",aut
 function toggleActive(id){if(eId(id).classList.contains('activeSetting')){eId(id).classList.remove('activeSetting');}else{eId(id).classList.add('activeSetting');eId(id)}}
 window.onload = function(){firebase.auth().onAuthStateChanged(function(user){if(user){eId('greeting').innerHTML=eId('greeting').innerHTML.replace("?user?",firebase.auth().currentUser.displayName);}else{eId('greeting').innerHTML="Redirecting to login page...";window.location.href="./login.html";}});};
 function c(){firebase.auth().signOut();}
+function updateDisplayName(n){console.log("Updating display name for: "+firebase.auth().currentUser);firebase.auth().currentUser.updateProfile({displayName:n}).then(function(){alert("Display name updated!");}).catch(function(e){alert(e);})}
