@@ -26,7 +26,19 @@ body {
 	padding-bottom: 0;
 }
 #header h3 {
+	display: inline-block;
 	margin: 0;
+}
+#admin {
+	display: inline-block;
+	float: right;
+	padding: 5px;
+	color: var(--amb);
+	background: initial;
+}
+#admin:hover {
+	color: var(--ora);
+	background: var(--amb);
 }
 #nav {
 	background: var(--ora);
@@ -64,6 +76,7 @@ body {
 .post h4 {
 	color: grey;
 	display: inline-block;
+	vertical-align: middle;
 	margin: 5px;
 }
 .post p {
