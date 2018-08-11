@@ -1,0 +1,50 @@
+<head>
+	<!--Firebase Start-->
+	<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+	<!--Firebase End-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	<link href="./styles.css" rel="stylesheet">
+	<script src="../scripts.js"></script>
+	<script>
+		function fade(id,text,color){if(!text){text="Placeholder text."}eId(id).innerHTML=text;if(!color){color="grey"}eId(id).style.color=color;eId(id).classList.add('fdIn');setTimeout(function(){eId(id).classList.remove('fdIn');},3750);}
+		function saveP(){console.log("Hi");}
+	</script>
+</head>
+<body>
+	<div id="aData"></div>
+	<div id="btData"></div>
+	<ul id="p">
+		<li id="actionBar"><h3>Posts:</h3><p id="updText" class="fdOut">Settings updated.</p><button id="save" onclick="saveP()"><i class="material-icons">save</i><div>Save</div></button></li>
+		<span id="rmPlz" style="margin:1%;font-style:italic;">Loading posts for user...</span>
+		<!--<li class="post"><span>?title?</span><button id="del-?id?"><i class="material-icons">delete</i><span>Delete</span><button id="edi-?id?"><i class="material-icons">edit</i><span>Edit</span></button></button></li>-->
+	</ul><div id="editor"><h3 style="color:white;">Post Editor area. Feature coming soon...</h3>
+	</div>
+	<script>
+		firebase.database().ref().child("/BibleThoughts/admins").on('value',function(s){
+			eId("aData").innerHTML=JSON.stringify(s.val());
+		});
+		var templ="<li class=\"post\"><span>?title?</span><button id=\"del-?id?\"><i class=\"material-icons\">delete</i><span>Delete</span><button id=\"edi-?id?\"><i class=\"material-icons\">edit</i><span>Edit</span></button></button></li>"
+		firebase.database().ref().child("/BibleThoughts/posts").once('value',function(s){
+			var d=s.val();
+			eId("btData").innerHTML=JSON.stringify(d);
+			var uid=firebase.auth().currentUser.uid;
+			var insText="";
+			var t;
+			for(var i=d.length-1;i>=0;i--){
+				if(uid==Object.keys(d[i])[0]){
+					t=templ;
+					t=t.replace("?title?",Object.keys(d[i][Object.keys(d[i])[0]])[0]);
+					t=t.replace("?id?",i);
+					t=t.replace("?id?",i);
+					insText+=t+"\n";
+				}
+			}
+			eId('p').removeChild(eId('rmPlz'));
+			eId('p').innerHTML+=insText;
+		});
+	</script>
+</body>

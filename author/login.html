@@ -46,6 +46,8 @@
 			#loading>p{font-size:35px;position:relative;top:40%;transform:perspective(0) translateY(-40%);}
 			input:focus{outline: none;}
 			#aData{display:none;}
+			.fdOut{opacity:0;transition:opacity 2.5s cubic-bezier(0, 1, 0.5, 1);}
+			.fdIn{opacity:1;}
 		</style>
 		<script src="./loginScripts.js"></script>
 		<title>Author Login ~ BibleThoughts</title>
@@ -55,10 +57,10 @@
 		<div id="loading"><p>Loading...</p></div>
 		<div id="loginBox">
 			<h1>Author Login</h1>
-			<p id="spacer"></p>
+			<p id="spacer" class="fdOut"></p>
 			<input id="email" placeholder="Email" type="email"/>
 			<input id="password" placeholder="Password" type="password"/>
-			<input id="loginButton" onclick="signIn()"value="Login" type="button"/ >
+			<input id="loginButton" onclick="signIn()" value="Login" type="button"/ >
 			<input id="mainPageButton" onclick="window.location.href='../index.html'"value="Return to BibleThoughts" type="button"/ >
 		</div>
 	</body>
