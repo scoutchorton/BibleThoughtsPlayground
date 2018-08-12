@@ -16,12 +16,12 @@ input{font-family:"Ubuntu",cursive,sans-serif;padding:1px;}
 #actionBar{overflow:overlay;width:100%;border-bottom:1px solid grey;}
 #actionBar h3{top:-50%;transform:translateY(50%);padding-left:1.5%;float:left;margin:0;}
 #actionBar p{margin:0 0 0 2.5%;float:left;text-align:center;box-sizing: border-box;top:-50%;transform:translateY(50%);color:rgb(0,100,0);}
-#save{display:block;vertical-align:middle;background:#000000;color:#ffffff;border:none;float:right;}
-#save:hover{background:#ffffff;color:#000000;}
-#save:active{border:none;}
-#save:focus,#dName:focus,#uName:focus{outline:none;}
-#save div{display:table-cell;vertical-align:middle;}
-#save i{padding:1%;}
+#refresh{display:block;vertical-align:middle;background:#000000;color:#ffffff;border:none;float:right;}
+#refresh:hover{background:#ffffff;color:#000000;}
+#refresh:active{border:none;}
+#refresh:focus,#dName:focus,#uName:focus{outline:none;}
+#refresh div{display:table-cell;vertical-align:middle;}
+#refresh i{padding:1%;}
 
 .post{
 	border-bottom:1px solid grey;

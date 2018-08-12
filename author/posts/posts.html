@@ -17,34 +17,39 @@
 <body>
 	<div id="aData"></div>
 	<div id="btData"></div>
-	<ul id="p">
-		<li id="actionBar"><h3>Posts:</h3><p id="updText" class="fdOut">Settings updated.</p><button id="save" onclick="saveP()"><i class="material-icons">save</i><div>Save</div></button></li>
-		<span id="rmPlz" style="margin:1%;font-style:italic;">Loading posts for user...</span>
+	<ul id="p"><li id="actionBar"><h3>Posts:</h3><p id="updText" class="fdOut">Settings updated.</p><button id="refresh" onclick="genPosts()"><i class="material-icons">refresh</i><div>Refresh</div></button></li><span id="rmPlz" style="margin:1%;font-style:italic;">Loading posts for user...</span></ul><div id="editor"><h3 style="color:white;">Post Editor area. Feature coming soon...</h3>
 		<!--<li class="post"><span>?title?</span><button id="del-?id?"><i class="material-icons">delete</i><span>Delete</span><button id="edi-?id?"><i class="material-icons">edit</i><span>Edit</span></button></button></li>-->
-	</ul><div id="editor"><h3 style="color:white;">Post Editor area. Feature coming soon...</h3>
 	</div>
 	<script>
 		firebase.database().ref().child("/BibleThoughts/admins").on('value',function(s){
 			eId("aData").innerHTML=JSON.stringify(s.val());
 		});
-		var templ="<li class=\"post\"><span>?title?</span><button id=\"del-?id?\"><i class=\"material-icons\">delete</i><span>Delete</span><button id=\"edi-?id?\"><i class=\"material-icons\">edit</i><span>Edit</span></button></button></li>"
-		firebase.database().ref().child("/BibleThoughts/posts").once('value',function(s){
-			var d=s.val();
-			eId("btData").innerHTML=JSON.stringify(d);
-			var uid=firebase.auth().currentUser.uid;
-			var insText="";
-			var t;
-			for(var i=d.length-1;i>=0;i--){
-				if(uid==Object.keys(d[i])[0]){
-					t=templ;
-					t=t.replace("?title?",Object.keys(d[i][Object.keys(d[i])[0]])[0]);
-					t=t.replace("?id?",i);
-					t=t.replace("?id?",i);
-					insText+=t+"\n";
+		var templ="<li class=\"post\"><span>?title?</span><button onclick=\"delPost(?id?)\" id=\"del-?id?\"><i class=\"material-icons\">delete</i><span>Delete</span><button id=\"edi-?id?\"><i class=\"material-icons\">edit</i><span>Edit</span></button></button></li>"
+		function genPosts(){
+			firebase.database().ref().child("/BibleThoughts/posts").once('value',function(s){
+				eId('p').innerHTML="<li id=\"actionBar\"><h3>Posts:</h3><p id=\"updText\" class=\"fdOut\">Settings updated.</p><button id=\"refresh\" onclick=\"genPosts()\"><i class=\"material-icons\">refresh</i><div>Refresh</div></button></li><span id=\"rmPlz\" style=\"margin:1%;font-style:italic;\">Loading posts for user...</span>";
+				var d=s.val();
+				eId("btData").innerHTML=JSON.stringify(d);
+				var uid=firebase.auth().currentUser.uid;
+				var insText="";
+				var t;
+				for(var i=Object.keys(d).length-1;i>=0;i--){
+					if(uid==Object.keys(d[Object.keys(d)[i]])[0]){
+						t=templ;
+						t=t.replace("?title?",Object.keys(d[Object.keys(d)[i]][Object.keys(d[Object.keys(d)[i]])[0]])[0]);
+						t=t.replace("?id?",Object.keys(d)[i]);
+						t=t.replace("?id?",Object.keys(d)[i]);
+						t=t.replace("?id?",Object.keys(d)[i]);
+						insText+=t;
+					}
 				}
-			}
-			eId('p').removeChild(eId('rmPlz'));
-			eId('p').innerHTML+=insText;
-		});
+				eId('p').removeChild(eId('rmPlz'));
+				eId('p').innerHTML+=insText;
+			});
+		}
+		genPosts();
+		function delPost(id){
+			firebase.database().ref().child("/BibleThoughts/posts/"+id).remove(function(){genPosts();});
+		}
 	</script>
 </body>
