@@ -1,22 +1,27 @@
-//Tools
-function eId(i){return document.getElementById(i)};
-// Initialize Firebase
+//Cory Gross - https://stackoverflow.com/questions/1144783/how-to-replace-all-occurrences-of-a-string-in-javascript
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
+
+//Firebase init
 console.clear();var config={apiKey:"AIzaSyC0q4W7LycPoJJQ7d6iluAyDxg5iNS3Jx4",authDomain:"github-page-demo.firebaseapp.com",databaseURL:"https://github-page-demo.firebaseio.com",projectId:"github-page-demo",storageBucket:"github-page-demo.appspot.com",messagingSenderId:"608313227028"};firebase.initializeApp(config);
+
 //Variables
-var template="<div class=\"post\"><h2>?title?</h2><h4>by ?author?</h4><p>?message?</p></div>";
-var t;
-//Functions
 var db=firebase.database().ref();
+function eId(i){return document.getElementById(i)};
+var template="<div class=\"post\"><span>?title?</span><span>By ?author?</span><span>?message?</span></div>";
+
+//Functions
 db.child("/BibleThoughts/admins").on('value',function(s){/*eId("aData").innerHTML=JSON.stringify(s.val(););*/
 	db.child('/BibleThoughts/posts/').on('value',function(z){
 		var d=z.val();
 		var aD=s.val();
-		eId('fbData').innerHTML=JSON.stringify(d);
 		eId("posts").innerHTML="";
 		for(var i=Object.keys(d).length-1;i>=0;i--){
 			var pI=Object.keys(d)[i];
 			var pD=d[pI];var aI=Object.keys(pD)[0];var aN=aD[aI];var pT=Object.keys(pD[aI])[0];var pC=pD[aI][pT];
-			t=template;t=t.replace("?message?",pC);t=t.replace("?title?",pT);
+			t=template;t=t.replace("?message?",pC.replaceAll('\n','<br/>'));t=t.replace("?title?",pT);
 			if(aN!==undefined){t=t.replace("?author?",aN);}else{t=t.replace("?author?","unknown author")}
 			eId("posts").innerHTML+=t;
 		}
