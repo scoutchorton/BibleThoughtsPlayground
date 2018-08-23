@@ -1,7 +1,7 @@
 var a=true;
 function eId(i){return document.getElementById(i);}
 function fade(id){eId(id).classList.add('fdIn');setTimeout(function(){eId(id).classList.remove('fdIn');},5000);}
-firebase.initializeApp({apiKey:"AIzaSyC0q4W7LycPoJJQ7d6iluAyDxg5iNS3Jx4",authDomain:"github-page-demo.firebaseapp.com",databaseURL:"https://github-page-demo.firebaseio.com",projectId:"github-page-demo",storageBucket:"github-page-demo.appspot.com",messagingSenderId:"608313227028"});
+firebase.initializeApp({apiKey:"AIzaSyA_nCeLJUNyXRGfzVXpPGJKUompqG4e1Yc",authDomain:"biblethoughts-7d344.firebaseapp.com",databaseURL:"https://biblethoughts-7d344.firebaseio.com",projectId:"biblethoughts-7d344",storageBucket:"biblethoughts-7d344.appspot.com",messagingSenderId:"65731658950"});
 var db=firebase.database().ref();
 db.child("/BibleThoughts/admins").on('value',function(s){eId("aData").innerHTML=JSON.stringify(s.val());});
 function signIn(){
